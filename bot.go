@@ -60,12 +60,43 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func exampleEasy() []slack.Block{
 	var blocks []slack.Block
 
-	headerText := slack.NewTextBlockObject("mrkdwn", "Testing with blocks", false, false)
+	headerText := slack.NewTextBlockObject("mrkdwn", "We found *100 Clusters* for profile *dev*", false, false)
 
 	// Create the header section
 	headerSection := slack.NewSectionBlock(headerText, nil, nil)
 
-	blocks = append(blocks, headerSection)
+	// Shared Divider
+	divSection := slack.NewDividerBlock()
+
+	clusterOne := slack.NewTextBlockObject("mrkdwn", "*scus-dev-a2*", false, false)
+
+	clusterOneProfile := slack.NewTextBlockObject("plain_text", "Profile: dev", true, false)
+	clusterOneSite := slack.NewTextBlockObject("plain_text", "Site: Azure", true, false)
+
+	clusterOneSection := slack.NewSectionBlock(clusterOne, nil, nil)
+	clusterOneContext := slack.NewContextBlock("", []slack.MixedElement{clusterOneProfile, clusterOneSite}...)
+
+
+	clusterTwo := slack.NewTextBlockObject("mrkdwn", "*scus-dev-a3*", false, false)
+
+	clusterTwoProfile := slack.NewTextBlockObject("plain_text", "Profile: dev", true, false)
+	clusterTwoSite := slack.NewTextBlockObject("plain_text", "Site: Azure", true, false)
+
+	clusterTwoSection := slack.NewSectionBlock(clusterTwo, nil, nil)
+	clusterTwoContext := slack.NewContextBlock("", []slack.MixedElement{clusterTwoProfile, clusterTwoSite}...)
+
+
+
+
+	blocks = append(blocks,
+		headerSection,
+		divSection,
+		clusterOneSection,
+		clusterOneContext,
+		divSection,
+		clusterTwoSection,
+		clusterTwoContext,
+		)
 
 	return blocks
 
