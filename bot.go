@@ -68,7 +68,7 @@ func exampleEasy() []slack.Block{
 	// Shared Divider
 	divSection := slack.NewDividerBlock()
 
-	clusterOne := slack.NewTextBlockObject("mrkdwn", "*scus-dev-a2*", false, false)
+	/*clusterOne := slack.NewTextBlockObject("mrkdwn", "*scus-dev-a2*", false, false)
 
 	clusterOneProfile := slack.NewTextBlockObject("plain_text", "Profile: dev", true, false)
 	clusterOneSite := slack.NewTextBlockObject("plain_text", "Site: Azure", true, false)
@@ -83,7 +83,7 @@ func exampleEasy() []slack.Block{
 	clusterTwoSite := slack.NewTextBlockObject("plain_text", "Site: Azure", true, false)
 
 	clusterTwoSection := slack.NewSectionBlock(clusterTwo, nil, nil)
-	clusterTwoContext := slack.NewContextBlock("", []slack.MixedElement{clusterTwoProfile, clusterTwoSite}...)
+	clusterTwoContext := slack.NewContextBlock("", []slack.MixedElement{clusterTwoProfile, clusterTwoSite}...)*/
 
 
 
@@ -91,11 +91,11 @@ func exampleEasy() []slack.Block{
 	blocks = append(blocks,
 		headerSection,
 		divSection,
-		clusterOneSection,
-		clusterOneContext,
-		divSection,
-		clusterTwoSection,
-		clusterTwoContext,
+		//clusterOneSection,
+		//clusterOneContext,
+		//divSection,
+		//clusterTwoSection,
+		//clusterTwoContext,
 		)
 
 	return blocks
