@@ -103,13 +103,17 @@ func exampleEasy() []byte{
 
 	//return blocks
 
-	msg := slack.NewBlockMessage(
+	/*msg := slack.NewBlockMessage(
 		headerSection,
 		divSection,
-	)
+	)*/
 
 	// Create an empty response
 	var response slack.Message
+	response = slack.NewBlockMessage(
+		headerSection,
+		divSection,
+		)
 
 	//b, err := json.MarshalIndent(msg, "", "     ")
 	b, err := json.Marshal(response)
