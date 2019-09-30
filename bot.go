@@ -32,14 +32,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	log.Printf("My request %v\n", request)
+	log.Printf("My request headers %v\n", request)
 
 	defer r.Body.Close()
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
 	body := buf.String()
-	log.Printf("%s\n", body)
+	log.Printf("My request body %s\n", body)
 	secretsVerifier, err := slack.NewSecretsVerifier(r.Header, "5066eb49cb78d9ef4a1c4482542479bf")
 	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
@@ -53,10 +53,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		log.Print(err)
 	}
+
+	log.Printf("My parsed Event %v\n", eventsAPIEvent)
+
 
 	if eventsAPIEvent.Type == slackevents.URLVerification {
 		var r *slackevents.ChallengeResponse
