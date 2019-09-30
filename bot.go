@@ -82,7 +82,7 @@ func exampleEasy() []byte{
 	headerSection := slack.NewSectionBlock(headerText, nil, nil)
 
 	// Shared Divider
-	divSection := slack.NewDividerBlock()
+	//divSection := slack.NewDividerBlock()
 
 	/*clusterOne := slack.NewTextBlockObject("mrkdwn", "*scus-dev-a2*", false, false)
 
@@ -106,7 +106,7 @@ func exampleEasy() []byte{
 
 	blocks = append(blocks,
 		headerSection,
-		divSection,
+		//divSection,
 		//clusterOneSection,
 		//clusterOneContext,
 		//divSection,
@@ -125,7 +125,7 @@ func exampleEasy() []byte{
 	var response slack.Message
 	response = slack.NewBlockMessage(
 		headerSection,
-		divSection,
+		//divSection,
 		)
 
 	response.Channel = "GFH5Y76LU"
