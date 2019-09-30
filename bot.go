@@ -65,15 +65,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		switch ev := innerEvent.Data.(type) {
 		case *slackevents.AppMentionEvent:
 			//api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
-			//api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
-			log.Println(ev.Channel)
-			w.Write(exampleEasy())
+			api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
+			//w.Write(exampleEasy())
 		}
 	}
 }
 
-//func exampleEasy() []slack.Block{
-func exampleEasy() []byte{
+func exampleEasy() []slack.Block{
+//func exampleEasy() []byte{
 	var blocks []slack.Block
 
 	headerText := slack.NewTextBlockObject("mrkdwn", "We found *100 Clusters* for profile *dev*", false, false)
@@ -142,7 +141,8 @@ func exampleEasy() []byte{
 
 	log.Print(string(b))
 
-	return b
+	//return b
+	return blocks
 
 }
 
