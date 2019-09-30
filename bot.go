@@ -115,6 +115,7 @@ func exampleEasy() []byte{
 		divSection,
 		)
 
+	response.Channel = "GFH5Y76LU"
 	//b, err := json.MarshalIndent(msg, "", "     ")
 	b, err := json.Marshal(response)
 	if err != nil {
