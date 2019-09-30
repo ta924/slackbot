@@ -116,6 +116,10 @@ func exampleEasy() []byte{
 		)
 
 	response.Channel = "GFH5Y76LU"
+	response.Type = "message"
+	response.Text = "This content can't be displayed."
+	response.User = "W45V5UHLY"
+	response.Team = "T024GHP2K"
 	//b, err := json.MarshalIndent(msg, "", "     ")
 	b, err := json.Marshal(response)
 	if err != nil {
