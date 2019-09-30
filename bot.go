@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/nlopes/slack"
@@ -13,7 +14,11 @@ import (
 )
 
 // You more than likely want your "Bot User OAuth Access Token" which starts with "xoxb-"
-var api = slack.New("xoxb-2152601087-519103094736-7P8GvjJCO2mOtVt7gK2hyFfC")
+var api = slack.New("xoxb-2152601087-519103094736-7P8GvjJCO2mOtVt7gK2hyFfC",
+	slack.OptionDebug(true),
+	slack.OptionLog(
+		log.New(os.Stdout, "slack-bot: ",
+			log.Lshortfile|log.LstdFlags)),)
 //"xoxb-2152601087-518569019028-puIGyAd0NLaxFETP3Y3DtMDO" --test
 
 
@@ -27,7 +32,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	log.Println(request)
+	log.Printf("My request %v\n", request)
+
+	defer r.Body.Close()
 
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(r.Body)
