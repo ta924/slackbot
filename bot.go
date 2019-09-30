@@ -108,7 +108,11 @@ func exampleEasy() []byte{
 		divSection,
 	)
 
-	b, err := json.MarshalIndent(msg, "", "     ")
+	// Create an empty response
+	var response slack.Message
+
+	//b, err := json.MarshalIndent(msg, "", "     ")
+	b, err := json.Marshal(response)
 	if err != nil {
 		log.Print(err)
 
