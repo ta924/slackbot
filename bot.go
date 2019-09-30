@@ -66,7 +66,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		case *slackevents.AppMentionEvent:
 			//api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
 			w.WriteHeader(http.StatusOK)
-			api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
+			api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
+			//api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
 			//w.Write(exampleEasy())
 		}
 	}
