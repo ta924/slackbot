@@ -59,7 +59,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		log.Print(err)
 	}
 
-	log.Printf("My parsed Event %v\n", eventsAPIEvent)
+	log.Printf("My parsed Event %+v\n", eventsAPIEvent)
 
 
 	if eventsAPIEvent.Type == slackevents.URLVerification {
