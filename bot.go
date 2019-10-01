@@ -9,6 +9,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/buger/jsonparser"
 	"github.com/nlopes/slack"
 	"github.com/nlopes/slack/slackevents"
 )
@@ -52,8 +53,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
+	ts, err := jsonparser.GetString([]byte(body), "ts")
+	if err != nil {
+		log.Print("Message did not contain a TS, message will not be attached to a thread!")
+	}
 
+	eventsAPIEvent, err := slackevents.ParseEvent(json.RawMessage(body), slackevents.OptionNoVerifyToken())
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -82,7 +87,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			//if err != nil {
 			//	log.Fatal(err)
 			//}
-			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
+			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...),
+				slack.MsgOptionTS(ts))
 			log.Printf("Successful post to channel %v at %v\n", channel, ts)
 			if err != nil {
 				log.Fatal(err)
