@@ -14,7 +14,7 @@ import (
 )
 
 // You more than likely want your "Bot User OAuth Access Token" which starts with "xoxb-"
-var api = slack.New("xoxb-2152601087-519103094736-7P8GvjJCO2mOtVt7gK2hyFfC",
+var api = slack.New("xoxb-2152601087-519103094736-lKjfzW31JxPXrR1M4gF9d9oJ",
 	slack.OptionDebug(true),
 	slack.OptionLog(
 		log.New(os.Stdout, "slack-bot: ",
@@ -77,7 +77,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		case *slackevents.AppMentionEvent:
 			//api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
 			//w.WriteHeader(http.StatusOK)
-			api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
+			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Printf("Successful post to channel %v at %v\n", channel, ts)
 			//api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
 			//w.Write(exampleEasy())
 		}
