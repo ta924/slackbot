@@ -77,12 +77,15 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		case *slackevents.AppMentionEvent:
 			//api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
 			//w.WriteHeader(http.StatusOK)
-			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
+			//channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
+			//if err != nil {
+			//	log.Fatal(err)
+			//}
+			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
+			log.Printf("Successful post to channel %v at %v\n", channel, ts)
 			if err != nil {
 				log.Fatal(err)
 			}
-			log.Printf("Successful post to channel %v at %v\n", channel, ts)
-			//api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...))
 			//w.Write(exampleEasy())
 		}
 	}
