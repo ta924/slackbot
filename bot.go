@@ -14,7 +14,7 @@ import (
 )
 
 // You more than likely want your "Bot User OAuth Access Token" which starts with "xoxb-"
-var api = slack.New("xoxb-2152601087-518569019028-Uq11JtfyZDbupCGIrVHGY55y",
+var api = slack.New("xoxb-2152601087-518569019028-l7kB4Zu6x1njR34i0MXNkpyf",
 	slack.OptionDebug(true),
 	slack.OptionLog(
 		log.New(os.Stdout, "slack-bot: ",
@@ -40,7 +40,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	buf.ReadFrom(r.Body)
 	body := buf.String()
 	log.Printf("My request body %s\n", body)
-	secretsVerifier, err := slack.NewSecretsVerifier(r.Header, "5066eb49cb78d9ef4a1c4482542479bf")
+	secretsVerifier, err := slack.NewSecretsVerifier(r.Header, "3965e3d97b691ed7f4e254b9735d23b8")
 	if err != nil {
 		w.WriteHeader(http.StatusForbidden)
 		return
