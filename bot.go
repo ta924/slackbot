@@ -14,7 +14,7 @@ import (
 )
 
 // You more than likely want your "Bot User OAuth Access Token" which starts with "xoxb-"
-var api = slack.New("xoxb-2152601087-518569019028-eL0tK8hQzpk8Tbfk6c3am4Wv",
+var api = slack.New("xoxb-2152601087-518569019028-TuzQPje8g4jglcMrXMy15Ts5",
 	slack.OptionDebug(true),
 	slack.OptionLog(
 		log.New(os.Stdout, "slack-bot: ",
