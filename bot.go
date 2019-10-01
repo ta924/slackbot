@@ -102,7 +102,7 @@ func exampleEasy() []slack.Block{
 	headerSection := slack.NewSectionBlock(headerText, nil, nil)
 
 	// Shared Divider
-	//divSection := slack.NewDividerBlock()
+	divSection := slack.NewDividerBlock()
 
 	/*clusterOne := slack.NewTextBlockObject("mrkdwn", "*scus-dev-a2*", false, false)
 
@@ -126,7 +126,7 @@ func exampleEasy() []slack.Block{
 
 	blocks = append(blocks,
 		headerSection,
-		//divSection,
+		divSection,
 		//clusterOneSection,
 		//clusterOneContext,
 		//divSection,
