@@ -86,7 +86,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		switch ev := innerEvent.Data.(type) {
 		case *slackevents.AppMentionEvent:
 			appMentionEvent := innerEvent.Data.(*slackevents.AppMentionEvent)
-			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...),
+			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionBlocks(actionInteractionStart() ...),
 				slack.MsgOptionTS(appMentionEvent.TimeStamp))
 			log.Printf("Successful post to channel %v at %v\n", channel, ts)
 			if err != nil {
