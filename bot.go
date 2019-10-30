@@ -22,6 +22,16 @@ var api = slack.New(token,
 			log.Lshortfile|log.LstdFlags)),)
 //"xoxb-2152601087-518569019028-puIGyAd0NLaxFETP3Y3DtMDO" --test
 
+func actionHandler(w http.ResponseWriter, r *http.Request){
+
+	var payload slack.InteractionCallback
+	err := json.Unmarshal([]byte(r.FormValue("payload")), &payload)
+	if err != nil {
+		fmt.Printf("Could not parse action response JSON: %v", err)
+	}
+	log.Printf("My payload %+v\n", payload)
+
+}
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	var request []string
@@ -75,12 +85,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		innerEvent := eventsAPIEvent.InnerEvent
 		switch ev := innerEvent.Data.(type) {
 		case *slackevents.AppMentionEvent:
-			//api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
-			//w.WriteHeader(http.StatusOK)
-			//channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionText("Yes, hello.", false))
-			//if err != nil {
-			//	log.Fatal(err)
-			//}
 			appMentionEvent := innerEvent.Data.(*slackevents.AppMentionEvent)
 			channel, ts, err := api.PostMessage(ev.Channel, slack.MsgOptionBlocks(exampleEasy() ...),
 				slack.MsgOptionTS(appMentionEvent.TimeStamp))
@@ -88,13 +92,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			//w.Write(exampleEasy())
 		}
 	}
 }
 
+func actionInteractionStart() []slack.Block  {
+	var blocks []slack.Block
+
+	return blocks
+}
+
 func exampleEasy() []slack.Block{
-//func exampleEasy() []byte{
 	var blocks []slack.Block
 
 	headerText := slack.NewTextBlockObject("mrkdwn", "We found *100 Clusters* for profile *dev*", false, false)
@@ -122,9 +130,6 @@ func exampleEasy() []slack.Block{
 	clusterTwoSection := slack.NewSectionBlock(clusterTwo, nil, nil)
 	clusterTwoContext := slack.NewContextBlock("", []slack.MixedElement{clusterTwoProfile, clusterTwoSite}...)
 
-
-
-
 	blocks = append(blocks,
 		headerSection,
 		divSection,
@@ -134,34 +139,6 @@ func exampleEasy() []slack.Block{
 		clusterTwoSection,
 		clusterTwoContext,
 		)
-
-	//return blocks
-
-	/*msg := slack.NewBlockMessage(
-		headerSection,
-		divSection,
-	)*/
-
-	// Create an empty response
-	var response slack.Message
-	response = slack.NewBlockMessage(
-		headerSection,
-		//divSection,
-		)
-
-	//response.Channel = "GFH5Y76LU"
-	//response.Type = "message"
-	//response.Text = "This content can't be displayed."
-	//response.User = "W45V5UHLY"
-	//response.Team = "T024GHP2K"
-	//b, err := json.MarshalIndent(msg, "", "     ")
-	b, err := json.Marshal(response)
-	if err != nil {
-		log.Print(err)
-
-	}
-
-	log.Print(string(b))
 
 	//return b
 	return blocks
@@ -273,5 +250,6 @@ return blocks
 
 func main() {
 	http.HandleFunc("/events-endpoint", handler)
+	http.HandleFunc("/actions", actionHandler)
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
