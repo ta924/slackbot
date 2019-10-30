@@ -24,12 +24,20 @@ var api = slack.New(token,
 
 func actionHandler(w http.ResponseWriter, r *http.Request){
 
+	defer r.Body.Close()
+
 	var payload slack.InteractionCallback
 	err := json.Unmarshal([]byte(r.FormValue("payload")), &payload)
 	if err != nil {
 		fmt.Printf("Could not parse action response JSON: %v", err)
 	}
 	log.Printf("My payload %+v\n", payload)
+	for _, a := range payload.ActionCallback.BlockActions{
+		//A button with text and value was pressed with action id and ts
+		log.Printf("A button with text %s and value %s, was pressed with action_id %s and ts %s",
+			a.Text.Text, a.Value, a.ActionID, a.ActionTs)
+	}
+	log.Printf("Message button pressed by user %s with value %s", payload.User.Name, payload.Value)
 
 }
 
@@ -107,7 +115,7 @@ func actionInteractionStart() []slack.Block  {
 	// Shared Divider
 	divSection := slack.NewDividerBlock()
 
-	chooseBtnText := slack.NewTextBlockObject("plain_text", "You can add a button alongside text in your message.", true, false)
+	chooseBtnText := slack.NewTextBlockObject("plain_text", "YES", true, false)
 	chooseBtnEle := slack.NewButtonBlockElement("", "yes", chooseBtnText)
 
 	optionOneText := slack.NewTextBlockObject("mrkdwn", "Test", false, false)
