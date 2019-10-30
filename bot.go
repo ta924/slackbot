@@ -99,6 +99,27 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func actionInteractionStart() []slack.Block  {
 	var blocks []slack.Block
 
+	headerText := slack.NewTextBlockObject("mrkdwn", "Testing with interactive actions", false, false)
+
+	// Create the header section
+	headerSection := slack.NewSectionBlock(headerText, nil, nil)
+
+	// Shared Divider
+	divSection := slack.NewDividerBlock()
+
+	chooseBtnText := slack.NewTextBlockObject("plain_text", "You can add a button alongside text in your message.", true, false)
+	chooseBtnEle := slack.NewButtonBlockElement("", "yes", chooseBtnText)
+
+	optionOneText := slack.NewTextBlockObject("mrkdwn", "Test", false, false)
+	optionOneSection := slack.NewSectionBlock(optionOneText, nil, slack.NewAccessory(chooseBtnEle))
+
+	blocks = append(blocks,
+		headerSection,
+		divSection,
+		optionOneSection,
+		)
+
+
 	return blocks
 }
 
